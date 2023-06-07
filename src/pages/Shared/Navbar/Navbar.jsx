@@ -15,14 +15,14 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="footer items-center p-4 bg-opacity-10 bg-black max-w-screen-xl text-black">
+            <div className="footer items-center p-4 bg-transparent bg-black max-w-screen-xl text-black">
                 <div className="items-center grid-flow-col">
                    <div className="flex">
                    <p className="flex me-5"><FaInbox className="me-2"></FaInbox> Info@printers.com</p>
                     <p className="flex"><FaPhone className="me-2"></FaPhone> +91 0800 123 4567</p>
                    </div>
                 </div>
-                <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+                <div className="grid-flow-col gap-4 place-self-center md:justify-self-end">
                     <Link><FaLinkedinIn></FaLinkedinIn></Link>
                     <Link><FaInstagram></FaInstagram></Link>
                     <Link><FaFacebook></FaFacebook></Link>
@@ -30,7 +30,7 @@ const Navbar = () => {
                     <Link><FaYoutube></FaYoutube></Link>
                 </div>
             </div>
-            <div className="navbar fixed z-10 bg-opacity-30 bg-black max-w-screen-xl text-black">
+            <div className="navbar fixed z-10 bg-opacity-30 bg-black max-w-screen-xl text-white">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
