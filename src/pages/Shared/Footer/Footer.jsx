@@ -5,7 +5,7 @@ const Footer = () => {
     const currentYear = moment().format('YYYY');
 
     return (
-        <div>
+        <div className="mt-40">
             <div className="footer p-10 bg-neutral text-neutral-content">
                 <div>
                     <img className="w-44 h-24" src="https://i.ibb.co/wSrvKrF/Logo-copy.png" alt="" />
