@@ -1,8 +1,17 @@
+import { useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const Login = () => {
+    const {signIn} = useContext(AuthContext);
+
     return (
+        <>
+        <Helmet>
+            <title>Fun Trek | Login</title>
+        </Helmet>
         <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl mt-40">
       <div
         className="hidden bg-cover lg:block lg:w-1/2"
@@ -105,7 +114,7 @@ const Login = () => {
         <div className="flex items-center justify-between mt-4">
           <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
 
-          <Link href="#" className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline">
+          <Link to="/signUp" className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline">
             or sign up
           </Link>
 
@@ -113,6 +122,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+        </>
     );
 };
 
