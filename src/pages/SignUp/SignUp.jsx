@@ -1,13 +1,27 @@
+import { useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const {createUser} = useContext(AuthContext);
+  
     const onSubmit = data => {
-        console.log(data)
+        console.log(data);
+        createUser(data.email, data.password, data.photoURL, data.name)
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+        })
     };
 
     return (
+        <>
+        <Helmet>
+            <title>Fun Trek | Sign Up</title>
+        </Helmet>
         <section  className="bg-white dark:bg-gray-900 rounded-2xl">
             <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
@@ -23,7 +37,7 @@ const SignUp = () => {
                     </div>
 
                     <div className=" form-control mt-8">
-                        <input type="url" {...register("url", { required: true })} className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Photo URL" />
+                        <input type="url" {...register("photoURL", { required: true })} className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Photo URL" />
                         {errors.url && <span className="text-red-500">Name is required</span>}
                     </div>
 
@@ -51,7 +65,7 @@ const SignUp = () => {
                     </div>
 
                     <div className="mt-6">
-                        <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                        <button type="submit" className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                             Sign Up
                         </button>
 
@@ -64,6 +78,7 @@ const SignUp = () => {
                 </form>
             </div>
         </section>
+    </>
     );
 };
 
