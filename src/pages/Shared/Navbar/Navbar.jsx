@@ -1,21 +1,19 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInbox, FaInstagram, FaLinkedinIn, FaPhone, FaTwitter, FaYoutube } from 'react-icons/fa';
-
 const Navbar = () => {
 
     const navOptions = <>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/menu">Instructors</Link></li>
-        <li><Link to="/order/salad">Classes</Link></li>
-        <li><Link to="/secret">Dashboard</Link></li>
-
-
+        <li><Link to="/instructors">Instructors</Link></li>
+        <li><Link to="/classes">Classes</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/login">login</Link></li>
     
     </>
 
     return (
         <>
-            <div className="footer items-center p-4 bg-transparent bg-black max-w-screen-xl text-black">
+        <div className="footer items-center p-4 bg-transparent bg-black max-w-screen-xl text-black">
                 <div className="items-center grid-flow-col">
                    <div className="flex">
                    <p className="flex me-5"><FaInbox className="me-2"></FaInbox> Info@printers.com</p>
@@ -30,6 +28,7 @@ const Navbar = () => {
                     <Link><FaYoutube></FaYoutube></Link>
                 </div>
             </div>
+            
             <div className="navbar fixed z-10 bg-opacity-30 bg-black max-w-screen-xl text-white">
                 <div className="navbar-start">
                     <div className="dropdown">

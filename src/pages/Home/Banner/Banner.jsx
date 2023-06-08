@@ -8,7 +8,7 @@ import img4 from '../../../assets/04.jpg';
 
 const Banner = () => {
     return (
-        <Carousel >
+            <Carousel >
         <div>
             <img src={img1} />
             <div className="absolute text-center flex flex-col items-center justify-center transform -translate-y-1/2 left-5 right-5 top-1/2">
