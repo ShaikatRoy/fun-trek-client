@@ -5,19 +5,19 @@ import { AuthContext } from "../../../providers/AuthProvider";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    
+
     const handleLogout = () => {
         logOut()
-            .then(() => {})
+            .then(() => { })
             .catch(error => console.log(error));
     }
-    
+
     const navOptions = (
-        <> 
+        <>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/instructors">Instructors</Link></li>
             <li><Link to="/classes">Classes</Link></li>
-            
+
             {user && <li><Link to="/dashboard">Dashboard</Link></li>}
         </>
     );
@@ -57,21 +57,18 @@ const Navbar = () => {
                         {navOptions}
                     </ul>
                 </div>
-                <div className="avatar navbar-end">
-                    {user ? (
-                        <>
+                {user ? (
+                    <div className="avatar navbar-end">
                         <div>
                             <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
                         </div>
-                        <div className="w-14 mask mask-squircle">
-                            <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        <div className="w-14">
+                            <img src={user.photoURL} alt="User Profile" className="w-full h-full rounded-full" />
                         </div>
-                        </>
-                        
-                    ) : (
-                        <Link to="/login">Login</Link>
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <Link to="/login">Login</Link>
+                )}
             </div>
         </>
     );

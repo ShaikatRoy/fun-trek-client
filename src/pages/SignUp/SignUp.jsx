@@ -2,11 +2,14 @@ import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
-  const { createUser } = useContext(AuthContext);
+  const { register, handleSubmit, reset, formState: { errors }, getValues } = useForm();
+  const { createUser,  updateUserProfile } = useContext(AuthContext);
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
   const onSubmit = data => {
     const { password, confirmPassword } = data;
@@ -19,10 +22,23 @@ const SignUp = () => {
     setPasswordError("");
 
     console.log(data);
-    createUser(data.email, data.password, data.photoURL, data.name)
+    createUser(data.email, data.password)
       .then(result => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        updateUserProfile(data.name, data.photoURL)
+        .then(() => {
+            console.log('user profile info updated')
+            reset();
+            Swal.fire({
+                icon: 'success',
+                title: 'User created Successfully.',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/');
+        })
+        .catch(error => console.log(error))
       });
   };
 
@@ -52,7 +68,7 @@ const SignUp = () => {
 
             <div className="form-control mt-8">
               <input
-                type="url"
+                type="text"
                 {...register("photoURL", { required: true })}
                 className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Photo URL"
