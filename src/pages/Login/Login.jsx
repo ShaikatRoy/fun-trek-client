@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -57,34 +58,6 @@ const Login = () => {
           <p className="mt-3 text-xl text-center text-gray-600 dark:text-gray-200">
             Welcome back!
           </p>
-
-          <Link
-            href="#"
-            className="flex items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <div className="px-4 py-2">
-              <svg className="w-6 h-6" viewBox="0 0 40 40">
-                {/* Google icon path */}
-              </svg>
-            </div>
-
-            <span className="w-5/6 px-4 py-3 font-bold text-center">
-              Sign in with Google
-            </span>
-          </Link>
-
-          <div className="flex items-center justify-between mt-4">
-            <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/4"></span>
-
-            <Link
-              href="#"
-              className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline"
-            >
-              or login with email
-            </Link>
-
-            <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
-          </div>
 
           <div className="mt-4">
             <label
@@ -144,17 +117,18 @@ const Login = () => {
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+            <span ></span>
 
             <Link
               to="/signUp"
               className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline"
             >
-              or sign up
+               Do not have an account? sign up
             </Link>
 
-            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+            <span className=""></span>
           </div>
+          <SocialLogin></SocialLogin>
         </form>
       </div>
     </>

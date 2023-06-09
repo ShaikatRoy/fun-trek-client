@@ -63,11 +63,11 @@ const Navbar = () => {
                             <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
                         </div>
                         <div className="w-14">
-                            <img src={user.photoURL} alt="User Profile" className="w-full h-full rounded-full" />
+                            <img src={user.photoURL} alt="User Profile" className="w-14 rounded-full" />
                         </div>
                     </div>
                 ) : (
-                    <Link to="/login">Login</Link>
+                    <Link className="navbar-end" to="/login">Login</Link>
                 )}
             </div>
         </>

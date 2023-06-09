@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
+import { FaCheckSquare, FaCodiepie, FaHome } from 'react-icons/fa';
 
 const DashBoard = () => {
     return (
@@ -13,10 +14,12 @@ const DashBoard = () => {
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
                    
-                    <li><Link>My Selected Classes</Link></li>
-                    <li><Link>My Enrolled Classes</Link></li>
+                    <li><Link to="/dashboard/selectedclass"><FaCheckSquare></FaCheckSquare> My Selected Classes</Link></li>
+                    <li><Link to="/dashboard/enrolledclass"><FaCodiepie></FaCodiepie> My Enrolled Classes</Link></li>
+                
+                    <div className="divider"></div>
+                    <li><Link to="/"><FaHome></FaHome> Home</Link></li>
                 </ul>
-
             </div>
         </div>
     );
