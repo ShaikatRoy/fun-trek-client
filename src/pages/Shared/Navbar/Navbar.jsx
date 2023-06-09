@@ -2,30 +2,25 @@ import { Link } from "react-router-dom";
 import { FaFacebook, FaInbox, FaInstagram, FaLinkedinIn, FaPhone, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
+
 const Navbar = () => {
-    const {user, logOut} = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     
     const handleLogout = () => {
         logOut()
-        .then(() => {})
-        .catch(error => console.log(error));
+            .then(() => {})
+            .catch(error => console.log(error));
     }
     
-    const navOptions = <> 
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/instructors">Instructors</Link></li>
-        <li><Link to="/classes">Classes</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
-        
-        {
-            user? <> 
-                <button onClick={handleLogout} className="btn btn-ghost">LogOut</button>
-            </> : <>
-                <li><Link to="/login">login</Link></li>
-            </>
-        }
-
-    </>
+    const navOptions = (
+        <> 
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/instructors">Instructors</Link></li>
+            <li><Link to="/classes">Classes</Link></li>
+            
+            {user && <li><Link to="/dashboard">Dashboard</Link></li>}
+        </>
+    );
 
     return (
         <>
@@ -63,9 +58,19 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="avatar navbar-end">
-                    <div className="w-14 mask mask-squircle">
-                        <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                    </div>
+                    {user ? (
+                        <>
+                        <div>
+                            <button onClick={handleLogout} className="btn btn-ghost">Logout</button>
+                        </div>
+                        <div className="w-14 mask mask-squircle">
+                            <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        </div>
+                        </>
+                        
+                    ) : (
+                        <Link to="/login">Login</Link>
+                    )}
                 </div>
             </div>
         </>
