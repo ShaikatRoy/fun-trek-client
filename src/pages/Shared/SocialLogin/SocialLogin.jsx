@@ -24,10 +24,8 @@ const SocialLogin = () => {
                 body: JSON.stringify(saveUser)
             })
                 .then(res => res.json())
-                .then(data => {
-                    if (data.insertedID) {
+                .then(() => {
                         navigate(from, { replace: true });
-                    }
                 })   
         })
     }

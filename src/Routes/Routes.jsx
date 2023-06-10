@@ -8,8 +8,11 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Classes from "../pages/Classes/Classes";
 import DashBoard from "../Layout/DashBoard";
-import SelectedClass from "../pages/SelectedClass/SelectedClass";
-import EnrolledClass from "../pages/EnrolledClass/EnrolledClass";
+
+import EnrolledClass from "../pages/Dashboard/EnrolledClass/EnrolledClass";
+import SelectedClass from "../pages/Dashboard/SelectedClass/SelectedClass";
+import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 
   export const router = createBrowserRouter([
     {
@@ -38,6 +41,14 @@ import EnrolledClass from "../pages/EnrolledClass/EnrolledClass";
         path: 'dashboard',
         element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
         children: [
+            {
+                path: 'manageclasses',
+                element: <ManageClasses></ManageClasses>
+            },
+            {
+                path: 'manageusers',
+                element: <ManageUsers></ManageUsers>
+            },
             {
                 path: 'selectedclass',
                 element: <SelectedClass></SelectedClass>
