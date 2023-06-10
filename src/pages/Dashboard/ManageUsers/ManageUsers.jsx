@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
-import { FaUserShield } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -30,6 +29,25 @@ const ManageUsers = () => {
         })
     }
 
+    const handleMakeInstructor = user => {
+        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        icon: 'success',
+                        title: `${user.name} is an Instructor Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+    };
+
     return (
         <div>
             <Helmet>
@@ -45,8 +63,8 @@ const ManageUsers = () => {
         <th>Photo</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Role</th>
-        <th>Action</th>
+        <th className="text-center">Role</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -65,14 +83,20 @@ const ManageUsers = () => {
             <td> {user.name}</td>
             <td>{user.email}</td>
             <td>
+             {
+                user.role === 'instructor' ? 'instructor' :
+                <button onClick={() => handleMakeInstructor(user)} 
+                className="btn btn-ghost bg-blue-500 text-white me-3">make instructor</button>
+              }
               {
                 user.role === 'admin' ? 'admin' :
                 <button onClick={() => handleMakeAdmin(user)} 
-                className="btn btn-ghost bg-green-500 text-white"><FaUserShield></FaUserShield></button>
+                className="btn btn-ghost bg-green-500 text-white ms-3">make admin</button>
               }
+
             </td>
             <td>
-              <button className="btn btn-ghost btn-xs">delete</button>
+
             </td>
           </tr> )
       }

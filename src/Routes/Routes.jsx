@@ -13,6 +13,7 @@ import EnrolledClass from "../pages/Dashboard/EnrolledClass/EnrolledClass";
 import SelectedClass from "../pages/Dashboard/SelectedClass/SelectedClass";
 import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
 
   export const router = createBrowserRouter([
     {
@@ -43,11 +44,11 @@ import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
         children: [
             {
                 path: 'manageclasses',
-                element: <ManageClasses></ManageClasses>
+                element: <AdminRoute><ManageClasses></ManageClasses></AdminRoute>
             },
             {
                 path: 'manageusers',
-                element: <ManageUsers></ManageUsers>
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             },
             {
                 path: 'selectedclass',
