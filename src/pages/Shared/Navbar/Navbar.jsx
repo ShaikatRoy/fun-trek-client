@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaInbox, FaInstagram, FaLinkedinIn, FaPhone, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInbox, FaInstagram, FaLinkedinIn, FaPhone, FaShoppingBag, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 
@@ -17,6 +17,14 @@ const Navbar = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/instructors">Instructors</Link></li>
             <li><Link to="/classes">Classes</Link></li>
+            <li>
+                <Link to="/selectedclass">
+                    <button className="btn">
+                        <FaShoppingBag></FaShoppingBag>
+                        <div className="badge badge-secondary">+99</div>
+                    </button>
+                </Link>
+            </li>
 
             {user && <li><Link to="/dashboard">Dashboard</Link></li>}
         </>

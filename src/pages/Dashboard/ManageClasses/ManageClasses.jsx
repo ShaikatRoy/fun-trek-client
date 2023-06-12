@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/dist/sweetalert2.css';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const ManageClasses = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [axiosSecure] = useAxiosSecure();
 
   useEffect(() => {
     fetchClasses();
@@ -12,7 +14,7 @@ const ManageClasses = () => {
 
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/classes');
+      const response = await axiosSecure.get('/classes');
       setClasses(response.data);
       setLoading(false);
     } catch (error) {
@@ -22,7 +24,8 @@ const ManageClasses = () => {
 
   const updateClassStatus = async (classId, status) => {
     try {
-      await axios.patch(`http://localhost:5000/classes/${classId}/status`, { status });
+      await axiosSecure.patch(`/classes/${classId}/status`, { status });
+
       setClasses((prevClasses) =>
         prevClasses.map((c) => {
           if (c._id === classId) {
@@ -31,6 +34,7 @@ const ManageClasses = () => {
           return c;
         })
       );
+
       Swal.fire({
         icon: 'success',
         title: `Class ${classId} has been ${status}`,
@@ -43,42 +47,44 @@ const ManageClasses = () => {
   };
 
   const sendFeedback = async (classId) => {
-    const { value: feedback } = await Swal.fire({
-      title: 'Send Feedback',
-      input: 'textarea',
-      inputLabel: 'Feedback',
-      inputPlaceholder: 'Type your feedback here...',
-      inputAttributes: {
-        'aria-label': 'Feedback',
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Send',
-      cancelButtonText: 'Cancel',
-      showLoaderOnConfirm: true,
-      preConfirm: async (text) => {
-        try {
-          await axios.post(`http://localhost:5000/classes/${classId}/feedback`, { feedback: text });
-          Swal.fire({
-            icon: 'success',
-            title: 'Feedback Sent',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } catch (error) {
-          console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong while sending feedback!',
-          });
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    });
+    try {
+      const { value: feedback } = await Swal.fire({
+        title: 'Send Feedback',
+        input: 'textarea',
+        inputLabel: 'Feedback',
+        inputPlaceholder: 'Type your feedback here...',
+        inputAttributes: {
+          'aria-label': 'Feedback',
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Send',
+        cancelButtonText: 'Cancel',
+        showLoaderOnConfirm: true,
+        preConfirm: async (text) => {
+          try {
+            const response = await axiosSecure.post(`/classes/${classId}/feedback`, { feedback: text });
+            if (response.status === 201) {
+              return true; 
+            }
+          } catch (error) {
+            console.error(error);
+            Swal.showValidationMessage(`Failed to send feedback: ${error}`);
+            return false; 
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
 
-    if (feedback) {
-      // Do something with the feedback
-      console.log(feedback);
+      if (feedback) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Feedback Sent',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -90,7 +96,7 @@ const ManageClasses = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {classes.map((classItem) => (
-            <div key={classItem._id} className="card bg-base-100 shadow-xl">
+            <div key={classItem._id} className="card bg-base-100 shadow-xl rounded-lg overflow-hidden">
               <figure>
                 <img
                   src={classItem.classImage}
@@ -98,25 +104,27 @@ const ManageClasses = () => {
                   className="w-full h-48 object-cover"
                 />
               </figure>
-              <div className="card-body">
-                <h2 className="card-title text-lg font-bold mb-2">{classItem.className}</h2>
-                <p className="mb-2">Instructor Name: {classItem.name}</p>
-                <p className="mb-2">Instructor Email: {classItem.email}</p>
-                <p className="mb-2">Available Seats: {classItem.seat}</p>
-                <p className="mb-2">Price: {classItem.price}</p>
-                <p className="mb-2">Status: {classItem.status}</p>
+              <div className="card-body p-4">
+                <h2 className="card-title text-lg font-semibold mb-2">{classItem.className}</h2>
+                <p className="mb-2 font-semibold">Instructor Name: {classItem.name}</p>
+                <p className="mb-2 font-semibold">Instructor Email: {classItem.email}</p>
+                <p className="mb-2 font-semibold">Available Seats: {classItem.seat}</p>
+                <p className="mb-2 font-semibold">Price: {classItem.price}</p>
+                <p className="mb-2 font-semibold">Status: {classItem.status}</p>
                 <div className="flex justify-end mt-4">
                   {classItem.status === 'pending' && (
                     <>
                       <button
                         className="btn btn-primary me-2"
                         onClick={() => updateClassStatus(classItem._id, 'approved')}
+                        disabled={classItem.status !== 'pending'}
                       >
                         Approve
                       </button>
                       <button
                         className="btn btn-secondary"
                         onClick={() => updateClassStatus(classItem._id, 'denied')}
+                        disabled={classItem.status !== 'pending'}
                       >
                         Deny
                       </button>

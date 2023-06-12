@@ -18,6 +18,7 @@ import InstructorRoute from "./InstructorRoute";
 import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import MyClasses from "../pages/Dashboard/MyClasses/MyClasses";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Instructors from "../pages/Instructors/Instructors";
 
   export const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
         {
             path: "/",
             element: <Home></Home>,
+        },
+        {
+            path: "instructors",
+            element: <Instructors></Instructors>
         },
         {
             path: "/classes",
@@ -64,11 +69,11 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
             },
             {
                 path: 'selectedclass',
-                element: <SelectedClass></SelectedClass>
+                element: <PrivateRoute><SelectedClass></SelectedClass></PrivateRoute>
             },
             {
                 path: 'enrolledclass',
-                element: <EnrolledClass></EnrolledClass>
+                element: <PrivateRoute><EnrolledClass></EnrolledClass></PrivateRoute>
             }
         ]
     },
