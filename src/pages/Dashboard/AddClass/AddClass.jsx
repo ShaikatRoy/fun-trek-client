@@ -11,7 +11,6 @@ const AddClass = () => {
       className: data.className,
       classImage: data.classImage,
       name: data.name,
-      profileImage: data.profileImage,
       email: data.email,
       seat: data.seat,
       price: data.price,
@@ -76,17 +75,6 @@ const AddClass = () => {
             placeholder="name"
             className="input input-bordered w-full mx-5"
             {...register('name', { required: true })}
-          />
-        </div>
-        <div className="form-control w-full mx-5">
-          <label className="label mx-5">
-            <span className="label-text">Profile Image</span>
-          </label>
-          <input
-            type="text"
-            placeholder="input image url"
-            className="input input-bordered w-full mx-5"
-            {...register('profileImage', { required: true })}
           />
         </div>
         <div className="flex">
