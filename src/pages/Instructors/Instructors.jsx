@@ -31,7 +31,7 @@ const InstructorsPage = () => {
           {instructors.map((instructor) => (
             <div key={instructor._id} className="card w-96 bg-base-100 shadow-xl">
               <figure>
-                <img src={instructor.photo} alt={instructor.name} className='w-48'/>
+                <img src={instructor.photo} alt={instructor.name} className='w-48 rounded-lg'/>
               </figure>
               <div className="card-body">
                 <h2 className="card-title">

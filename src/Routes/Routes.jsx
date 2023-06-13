@@ -35,7 +35,7 @@ import Instructors from "../pages/Instructors/Instructors";
         },
         {
             path: "/classes",
-            element: <PrivateRoute><Classes></Classes></PrivateRoute>,
+            element: <Classes></Classes>
         },
         {
             path: 'login',

@@ -18,10 +18,10 @@ const Navbar = () => {
             <li><Link to="/instructors">Instructors</Link></li>
             <li><Link to="/classes">Classes</Link></li>
             <li>
-                <Link to="/selectedclass">
+                <Link to="dashboard/selectedclass">
                     <button className="btn">
                         <FaShoppingBag></FaShoppingBag>
-                        <div className="badge badge-secondary">+99</div>
+                        <div className="badge badge-secondary">+0</div>
                     </button>
                 </Link>
             </li>
