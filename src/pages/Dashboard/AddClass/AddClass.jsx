@@ -12,8 +12,8 @@ const AddClass = () => {
       classImage: data.classImage,
       name: data.name,
       email: data.email,
-      seat: data.seat,
-      price: data.price,
+      seat: parseFloat(data.seat),
+      price: parseFloat(data.price),
       status: 'pending'
     };
   

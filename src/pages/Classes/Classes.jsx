@@ -3,13 +3,16 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useCart from '../../hooks/useCart';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
   const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
+  const [refetch] = useCart();
   const { user } = useAuth();
   const location = useLocation();
+
 
   useEffect(() => {
     fetchClasses();
@@ -47,6 +50,7 @@ const Classes = () => {
         .then(res => res.json())
         .then(data => {
             if(data.insertedId){
+                refetch();
                 Swal.fire({
                     icon: 'success',
                     title: 'class added on the cart.',
