@@ -19,6 +19,7 @@ import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import MyClasses from "../pages/Dashboard/MyClasses/MyClasses";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Instructors from "../pages/Instructors/Instructors";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
   export const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ import Instructors from "../pages/Instructors/Instructors";
         path: 'dashboard',
         element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
         children: [
+            {
+                path: 'payment',
+                element: <Payment></Payment>
+            },
             {
                 path: 'manageclasses',
                 element: <AdminRoute><ManageClasses></ManageClasses></AdminRoute>

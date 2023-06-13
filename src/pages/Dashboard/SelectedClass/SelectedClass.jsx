@@ -1,19 +1,41 @@
+import { Link } from "react-router-dom";
 import useCart from "../../../hooks/useCart";
+import Swal from "sweetalert2";
 
 const SelectedClass = () => {
-  const [cart, setCart] = useCart();
+  const [cart, setCart, refetch] = useCart();
 
-  const handleDelete = (classId) => {
-    // Remove the class from the cart
-    const updatedCart = cart.filter((item) => item.classId !== classId);
-    setCart(updatedCart);
+  const handleDelete = item => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:5000/carts/${item._id}`,{
+            method: 'DELETE',
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.deletedCount > 0) {
+                refetch();
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                'success'
+                )
+            }
+          })
+        }
+      })
   };
 
   const handlePay = () => {
-    // Perform payment processing logic
-    // ...
-
-    // Clear the cart after successful payment
+   
     setCart([]);
   };
 
@@ -45,16 +67,18 @@ const SelectedClass = () => {
                 <td>
                   <button
                     className="btn btn-sm btn-red"
-                    onClick={() => handleDelete(item.classId)}
+                    onClick={() => handleDelete(item)}
                   >
                     Delete
                   </button>
+                  <Link to="/dashboard/payment">
                   <button
                     className="btn btn-sm btn-primary ml-2"
                     onClick={handlePay}
                   >
                     Pay
                   </button>
+                  </Link>
                 </td>
               </tr>
             ))}
