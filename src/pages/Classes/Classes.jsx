@@ -4,6 +4,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useCart from '../../hooks/useCart';
+import SectionTitle from '../../Layout/SectionTitle';
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
@@ -79,9 +80,11 @@ const Classes = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Classes</h1>
-
+      <SectionTitle
+                heading="All classes"
+            ></SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      
         {classes.map((classItem) => (
           <div key={classItem._id} className="card shadow-xl">
             <figure>

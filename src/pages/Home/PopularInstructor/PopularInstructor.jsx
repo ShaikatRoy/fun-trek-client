@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import SectionTitle from '../../../Layout/SectionTitle';
 
 const PopularInstructors = () => {
-  const [instructors, setInstructors] = useState([]);
+  const [popularInstructors, setPopularInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [axiosSecure] = useAxiosSecure();
 
   useEffect(() => {
     fetchPopularInstructors();
@@ -12,37 +12,65 @@ const PopularInstructors = () => {
 
   const fetchPopularInstructors = async () => {
     try {
-      const response = await axiosSecure.get('/instructors');
-      const sortedInstructors = response.data.sort((a, b) => b.seats - a.seats);
+      const response = await fetch('/instructors');
+      if (!response.ok) {
+        throw new Error('Failed to fetch instructors');
+      }
+      const data = await response.json();
+      const sortedInstructors = data.sort((a, b) => b.students - a.students);
       const topInstructors = sortedInstructors.slice(0, 6);
-      setInstructors(topInstructors);
+      setPopularInstructors(topInstructors);
       setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Popular Instructors</h1>
+      <SectionTitle heading="Popular Instructors" />
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {instructors.map((instructor) => (
-            <div key={instructor.id} className="card bg-base-100 shadow-xl rounded-lg overflow-hidden flex flex-col items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          {popularInstructors.map((instructor) => (
+            <motion.div
+              key={instructor._id}
+              className="card bg-base-100 shadow-xl rounded-lg overflow-hidden"
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+            >
               <figure>
-                <img
+                <motion.img
                   src={instructor.photo}
                   alt={instructor.name}
-                  className="w-48 h-48 rounded-full object-cover mt-4"
+                  className="w-full h-48 object-cover"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
                 />
               </figure>
-              <div className="card-body p-4 flex flex-col items-center">
+              <motion.div
+                className="card-body p-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <h2 className="card-title text-lg font-semibold mb-2">{instructor.name}</h2>
-                <p className="mb-2 font-semibold">{instructor.email}</p>
-              </div>
-            </div>
+                <p className="mb-2 font-semibold">Students: {instructor.students}</p>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       )}

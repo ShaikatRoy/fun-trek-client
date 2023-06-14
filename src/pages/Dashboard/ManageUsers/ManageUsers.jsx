@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import SectionTitle from "../../../Layout/SectionTitle";
 
 const ManageUsers = () => {
     const [ axiosSecure] = useAxiosSecure();
@@ -49,7 +50,11 @@ const ManageUsers = () => {
     };
 
     return (
+    
         <div>
+          <SectionTitle
+    heading="Manage Users "
+></SectionTitle>
             <Helmet>
                 <title>Fun Trek | All Users</title>
             </Helmet>

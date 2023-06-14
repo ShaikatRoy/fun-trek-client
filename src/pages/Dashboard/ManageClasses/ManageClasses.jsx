@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/dist/sweetalert2.css';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import SectionTitle from '../../../Layout/SectionTitle';
 
 const ManageClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -89,8 +90,11 @@ const ManageClasses = () => {
   };
 
   return (
+   <>
+   <SectionTitle
+                heading="Manage Class"
+            ></SectionTitle>
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Manage Classes</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -143,6 +147,7 @@ const ManageClasses = () => {
         </div>
       )}
     </div>
+   </>
   );
 };
 

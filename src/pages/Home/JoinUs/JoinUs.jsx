@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SectionTitle from '../../../Layout/SectionTitle';
 
 const JoinUs = () => {
   const containerVariants = {
@@ -17,12 +18,17 @@ const JoinUs = () => {
   };
 
   return (
+    <>
+    <SectionTitle
+    heading="Join Us "
+></SectionTitle>
     <motion.div
       className="join-us-section py-12 text-white bg-gradient-to-br from-black via-gray-800 to-black"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
+    
       <div className="container mx-auto flex flex-col items-center rounded-lg">
         <h2 className="text-4xl font-bold mb-4">Join Us This Summer!</h2>
         <p className="text-lg mb-8">Experience the best summer camp for your kids.</p>
@@ -35,6 +41,8 @@ const JoinUs = () => {
         />
       </div>
     </motion.div>
+    </>
+    
   );
 };
 
