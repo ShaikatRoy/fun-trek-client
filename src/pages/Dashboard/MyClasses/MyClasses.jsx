@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import 'sweetalert2/dist/sweetalert2.css';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -18,7 +17,8 @@ const MyClasses = () => {
       setClasses(response.data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching classes:', error);
+      setLoading(false);
     }
   };
 
@@ -27,7 +27,7 @@ const MyClasses = () => {
       <h1 className="text-3xl font-bold mb-4">My Classes</h1>
       {loading ? (
         <p>Loading...</p>
-      ) : (
+      ) : classes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {classes.map((classItem) => (
             <div key={classItem._id} className="card bg-base-100 shadow-xl rounded-lg overflow-hidden">
@@ -54,6 +54,8 @@ const MyClasses = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <p>No classes found.</p>
       )}
     </div>
   );

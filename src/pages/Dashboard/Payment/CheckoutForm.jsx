@@ -80,9 +80,9 @@ const CheckoutForm = ({ price , cart }) => {
             itemNames: cart.map(item => item.name)
         };
         axiosSecure.post("/payments", payment).then((res) => {
-          if (res.data.insertResult.insertedId) {
+          if (res.data?.insertResult?.insertedId) {
             // display confirm
-            console.log("object");
+            console.log("Payment saved successfully");
           }
         });
     }

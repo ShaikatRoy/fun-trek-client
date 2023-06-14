@@ -53,7 +53,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
         element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
         children: [
             {
-                path: 'payment',
+                path: 'payment/:id',
                 element: <Payment></Payment>
             },
             {
