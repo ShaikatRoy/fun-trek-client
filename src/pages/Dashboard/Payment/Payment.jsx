@@ -31,7 +31,7 @@ const Payment = () => {
 
     return (
         <div className="w-96">
-            <h2 className="text-3xl">Complete the payment</h2>
+            <h2 className="text-3xl">Complete the payment for</h2>
             <Elements stripe={stripePromise}>
                 <CheckoutForm
                     cart={cart}
