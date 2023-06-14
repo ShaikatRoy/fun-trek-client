@@ -39,7 +39,7 @@ const Classes = () => {
                           email: user.email
                         }
                         console.log(cartItem);
-        fetch('http://localhost:5000/carts', {
+        fetch('https://vercel.com/shaikatroy/fun-trek-server/carts', {
             method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',

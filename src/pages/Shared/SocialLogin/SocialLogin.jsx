@@ -16,7 +16,7 @@ const SocialLogin = () => {
             const loggedInUser = result.user;
             console.log(loggedInUser);
             const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, photo: loggedInUser.photoURL }
-            fetch('http://localhost:5000/users', {
+            fetch('https://fun-trek-server.vercel.app/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ const AddClass = () => {
     const token = localStorage.getItem('access-token');
     console.log('Token:', token);
   
-    fetch('http://localhost:5000/classes', {
+    fetch('https://fun-trek-server.vercel.app/classes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
