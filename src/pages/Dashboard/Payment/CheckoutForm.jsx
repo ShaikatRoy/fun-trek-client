@@ -21,7 +21,7 @@ const CheckoutForm = ({ price , cart }) => {
        console.log(res.data.clientSecret);
        setClientSecret(res.data.clientSecret);
     })
-  }, []);
+  }, [price, axiosSecure]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ const CheckoutForm = ({ price , cart }) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -68,7 +68,7 @@ const CheckoutForm = ({ price , cart }) => {
     }
     console.log("payment Intent", paymentIntent);
     setProcessing(false)
-    if(paymentIntent.status === 'succeeded'){
+    if(paymentIntent?.status === 'succeeded'){
         setTransactionId(paymentIntent.id)
         
         // save payment info to the server
@@ -78,7 +78,13 @@ const CheckoutForm = ({ price , cart }) => {
             price,
             items: cart.map(item => item._id),
             itemNames: cart.map(item => item.name)
-        }
+        };
+        axiosSecure.post("/payments", payment).then((res) => {
+          if (res.data.insertResult.insertedId) {
+            // display confirm
+            console.log("object");
+          }
+        });
     }
 
   };

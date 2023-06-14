@@ -3,7 +3,7 @@ import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 
 const SelectedClass = () => {
-  const [cart, setCart, refetch] = useCart();
+  const [cart, refetch] = useCart();
 
   const handleDelete = item => {
     Swal.fire({
@@ -21,7 +21,7 @@ const SelectedClass = () => {
           })
           .then(res => res.json())
           .then(data => {
-            if (data.deletedCount > 0) {
+            if (data.deletedCount >0) {
                 refetch();
                 Swal.fire(
                   'Deleted!',
@@ -32,11 +32,6 @@ const SelectedClass = () => {
           })
         }
       })
-  };
-
-  const handlePay = () => {
-   
-    setCart([]);
   };
 
   return (
@@ -71,10 +66,9 @@ const SelectedClass = () => {
                   >
                     Delete
                   </button>
-                  <Link to="/dashboard/payment">
+                  <Link to={`/dashboard/payment/${item._id}`}>
                   <button
                     className="btn btn-sm btn-primary ml-2"
-                    onClick={handlePay}
                   >
                     Pay
                   </button>

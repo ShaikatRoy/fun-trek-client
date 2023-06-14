@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/dist/sweetalert2.css';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
@@ -18,72 +17,6 @@ const MyClasses = () => {
       const response = await axiosSecure.get('/classes');
       setClasses(response.data);
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateClassStatus = async (classId, status) => {
-    try {
-      await axiosSecure.patch(`/classes/${classId}/status`, { status });
-
-      setClasses((prevClasses) =>
-        prevClasses.map((c) => {
-          if (c._id === classId) {
-            return { ...c, status };
-          }
-          return c;
-        })
-      );
-
-      Swal.fire({
-        icon: 'success',
-        title: `Class ${classId} has been ${status}`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const sendFeedback = async (classId) => {
-    try {
-      const { value: feedback } = await Swal.fire({
-        title: 'Send Feedback',
-        input: 'textarea',
-        inputLabel: 'Feedback',
-        inputPlaceholder: 'Type your feedback here...',
-        inputAttributes: {
-          'aria-label': 'Feedback',
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Send',
-        cancelButtonText: 'Cancel',
-        showLoaderOnConfirm: true,
-        preConfirm: async (text) => {
-          try {
-            const response = await axiosSecure.post(`/classes/${classId}/feedback`, { feedback: text });
-            if (response.status === 201) {
-              return true; // Return a truthy value when feedback is successfully sent
-            }
-          } catch (error) {
-            console.error(error);
-            Swal.showValidationMessage(`Failed to send feedback: ${error}`);
-            return false; // Return a falsy value when there is an error
-          }
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
-      });
-
-      if (feedback) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Feedback Sent',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
     } catch (error) {
       console.error(error);
     }
@@ -117,31 +50,6 @@ const MyClasses = () => {
                     <p>{classItem.feedback}</p>
                   </div>
                 )}
-                <div className="flex justify-end mt-4">
-                  {classItem.status === 'pending' && (
-                    <>
-                      <button
-                        className="btn btn-primary me-2"
-                        onClick={() => updateClassStatus(classItem._id, 'approved')}
-                        disabled={classItem.status !== 'pending'}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => updateClassStatus(classItem._id, 'denied')}
-                        disabled={classItem.status !== 'pending'}
-                      >
-                        Deny
-                      </button>
-                    </>
-                  )}
-                  {classItem.status === 'denied' && (
-                    <button className="btn btn-accent ms-2" onClick={() => sendFeedback(classItem._id)}>
-                      Send Feedback
-                    </button>
-                  )}
-                </div>
               </div>
             </div>
           ))}
