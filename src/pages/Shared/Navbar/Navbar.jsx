@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaInbox, FaInstagram, FaLinkedinIn, FaPhone, FaShoppingBag, FaTwitter, FaYoutube } from 'react-icons/fa';
+import {FaShoppingBag } from 'react-icons/fa';
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import useCart from "../../../hooks/useCart";
@@ -34,21 +34,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="footer items-center p-4 bg-transparent bg-black max-w-screen-xl text-black">
-                <div className="items-center grid-flow-col">
-                    <div className="flex">
-                        <p className="flex me-5"><FaInbox className="me-2"></FaInbox> Info@printers.com</p>
-                        <p className="flex"><FaPhone className="me-2"></FaPhone> +91 0800 123 4567</p>
-                    </div>
-                </div>
-                <div className="grid-flow-col gap-4 place-self-center md:justify-self-end">
-                    <Link><FaLinkedinIn></FaLinkedinIn></Link>
-                    <Link><FaInstagram></FaInstagram></Link>
-                    <Link><FaFacebook></FaFacebook></Link>
-                    <Link><FaTwitter></FaTwitter></Link>
-                    <Link><FaYoutube></FaYoutube></Link>
-                </div>
-            </div>
+            
 
             <div className="navbar fixed z-10 bg-opacity-30 bg-black max-w-screen-xl text-white">
                 <div className="navbar-start">
@@ -79,7 +65,9 @@ const Navbar = () => {
                 ) : (
                     <Link className="navbar-end" to="/login">Login</Link>
                 )}
+                
             </div>
+            
         </>
     );
 };

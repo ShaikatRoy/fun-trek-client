@@ -31,7 +31,7 @@ const Classes = () => {
   
 
   const handleSelect = async (classItem) => {
-    console.log(classItem);
+    
     if(user && user.email){
         const cartItem = {classId: classItem._id,
                           className: classItem.className,
@@ -40,7 +40,7 @@ const Classes = () => {
                           email: user.email
                         }
                         console.log(cartItem);
-        fetch('https://vercel.com/shaikatroy/fun-trek-server/carts', {
+        fetch('https://fun-trek-server.vercel.app/carts', {
             method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const Classes = () => {
         .then(res => res.json())
         .then(data => {
             if(data.insertedId){
-                refetch();
+                // refetch;
                 Swal.fire({
                     icon: 'success',
                     title: 'class added on the cart.',
@@ -96,9 +96,9 @@ const Classes = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title">{classItem.className}</h2>
-              <p>Instructor: {classItem.instructorName}</p>
+              <p>Instructor: {classItem.name}</p>
               <p>Price: ${classItem.price}</p>
-              <p>User Email: {classItem.userEmail}</p>
+              <p>User Email: {classItem.email}</p>
               <button
                 className="btn btn-primary"
                 onClick={() => handleSelect(classItem)}

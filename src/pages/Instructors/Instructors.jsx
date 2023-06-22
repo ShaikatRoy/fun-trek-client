@@ -1,25 +1,20 @@
 import { useState, useEffect } from 'react';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const InstructorsPage = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [axiosSecure] = useAxiosSecure();
+
 
   useEffect(() => {
-    fetchInstructors();
+    fetch("https://fun-trek-server.vercel.app/instructors")
+    .then(res=>res.json())
+    .then(data=>{setInstructors(data)
+    setLoading(false)
+    })
+
   }, []);
 
-  const fetchInstructors = async () => {
-    try {
-      const response = await axiosSecure.get('/instructors');
-      setInstructors(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+console.log(instructors)
   return (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-4">Instructors</h1>

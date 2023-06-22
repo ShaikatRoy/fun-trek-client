@@ -4,33 +4,34 @@ import SectionTitle from '../../../Layout/SectionTitle';
 
 const PopularInstructors = () => {
   const [popularInstructors, setPopularInstructors] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(false);
 
   useEffect(() => {
-    fetchPopularInstructors();
+    fetch("https://fun-trek-server.vercel.app/instructors")
+      .then(res => res.json())
+      .then(data => {
+        setPopularInstructors(data.slice(0, 6));
+      });
   }, []);
 
-  const fetchPopularInstructors = async () => {
-    try {
-      const response = await fetch('/instructors');
-      if (!response.ok) {
-        throw new Error('Failed to fetch instructors');
-      }
-      const data = await response.json();
-      const sortedInstructors = data.sort((a, b) => b.students - a.students);
-      const topInstructors = sortedInstructors.slice(0, 6);
-      setPopularInstructors(topInstructors);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const cardVariants = {
     hidden: { opacity: 0, scale: 0 },
     visible: {
       opacity: 1,
       scale: 1,
       transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delay: 0.2,
         duration: 0.5,
       },
     },
@@ -46,7 +47,7 @@ const PopularInstructors = () => {
           {popularInstructors.map((instructor) => (
             <motion.div
               key={instructor._id}
-              className="card bg-base-100 shadow-xl rounded-lg overflow-hidden"
+              className="card bg-base-100 shadow-xl rounded-lg overflow-hidden flex flex-col items-center justify-center"
               variants={cardVariants}
               initial="hidden"
               animate="visible"
@@ -55,20 +56,19 @@ const PopularInstructors = () => {
                 <motion.img
                   src={instructor.photo}
                   alt={instructor.name}
-                  className="w-full h-48 object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
+                  className="w-full h-48 object-cover rounded-full"
+                  variants={imageVariants}
+                  initial="hidden"
+                  animate="visible"
                 />
               </figure>
               <motion.div
-                className="card-body p-4"
+                className="card-body p-4 text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
                 <h2 className="card-title text-lg font-semibold mb-2">{instructor.name}</h2>
-                <p className="mb-2 font-semibold">Students: {instructor.students}</p>
               </motion.div>
             </motion.div>
           ))}
